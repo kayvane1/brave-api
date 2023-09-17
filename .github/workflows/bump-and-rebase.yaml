@@ -1,0 +1,35 @@
+---
+name: Bump and Rebase
+
+on:
+  push:
+    branches:
+      - production
+    paths-ignore:
+      - CHANGELOG.md
+      - pyproject.toml
+
+jobs:
+  bump-and-rebase:
+    name: Bump
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Import Actions
+        uses: actions/checkout@v3
+        with:
+          repository: util-co/util-actions
+          path: ./.util
+          ref: refs/tags/v5
+          token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+
+      - name: Set up
+        uses: ./.util/actions/poetry/setup
+
+      - name: Bump
+        uses: ./.util/actions/poetry/bump-and-rebase
+        with:
+          github_token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"

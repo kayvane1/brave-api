@@ -1,0 +1,50 @@
+---
+name: Pull Request
+
+on:
+  create:
+  push:
+    branches:
+      - staging
+    paths-ignore:
+      - CHANGELOG.md
+      - pyproject.toml
+
+jobs:
+
+  pull-request:
+    name: Create Pull Request
+    if: contains(github.ref, 'refs/heads/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Import Actions
+        uses: actions/checkout@v3
+        with:
+          repository: util-co/util-actions
+          path: ./.util
+          ref: refs/tags/v5
+          token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+
+      - name: Get Branch Name
+        shell: bash
+        run: echo "##[set-output name=name;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: branch-name
+
+      - name: Staging Pull Request
+        if: "!contains(github.ref, 'staging')"
+        uses: ./.util/actions/github/pull-request
+        with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          pr_title: "${{ steps.branch-name.outputs.name }}"
+          destination_branch: staging
+
+      - name: Production Pull Request
+        if: contains(github.ref, 'staging')
+        uses: ./.util/actions/github/pull-request
+        with:
+          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          destination_branch: production
+          pr_title: Production Release
+          pr_template_file: simple_checklist.md

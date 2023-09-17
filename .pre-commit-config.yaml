@@ -1,0 +1,90 @@
+---
+fail_fast: true
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.3.0
+    hooks:
+      - id: check-toml
+        stages: [commit]
+
+      - id: end-of-file-fixer
+        stages: [commit]
+
+      - id: trailing-whitespace
+        stages: [commit]
+
+      - id: check-yaml
+        stages: [commit]
+
+      - id: detect-private-key
+        stages: [commit]
+
+      - id: check-executables-have-shebangs
+        stages: [commit]
+
+      - id: check-shebang-scripts-are-executable
+        stages: [commit]
+
+
+  - repo: local
+    hooks:
+      - id: test
+        name: Run Tests
+        entry: poetry run python -m pytest
+        pass_filenames: false
+        language: system
+        stages: [push]
+
+      - id: black
+        name: Run Black
+        entry: poetry run black
+        language: system
+        types: [file, python]
+        stages: [commit]
+
+      - id: isort
+        name: Run Isort
+        entry: poetry run isort
+        language: system
+        types: [file, python]
+        stages: [commit]
+
+      - id: flake8
+        name: Run Flake8
+        entry: poetry run pflake8
+        language: system
+        types: [file, python]
+        stages: [commit]
+
+      - id: yamllint
+        name: Run Yamllint
+        entry: poetry run yamllint
+        language: system
+        types: [file, yaml]
+        stages: [commit]
+
+      - id: bandit
+        name: Run Bandit
+        entry: poetry run bandit
+        language: system
+        types: [file, python]
+        args:
+          [
+            --configfile,
+            pyproject.toml,
+            --severity-level,
+            all,
+            --confidence-level,
+            all,
+            --quiet,
+            --format,
+            custom,
+          ]
+        stages: [commit]
+
+      - id: commit-message
+        name: Check commit message
+        entry: poetry run cz check --commit-msg-file
+        language: system
+        stages: [commit-msg]

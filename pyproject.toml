@@ -1,0 +1,165 @@
+[tool.poetry]
+name = "util-package-apo"
+version = "0.1.0"
+description = "Automatic Prompt Optimisation"
+authors = ["Util Engineering <eng@util.co>"]
+readme = "README.md"
+homepage = "https://github.com/util-co/util-package-apo"
+repository = "https://github.com/util-co/util-package-apo"
+keywords = ['prompt-optimisation', ' prompt-engineering', ' llm']  # noqa
+packages = [
+    { include = "apo", from = "src" },
+]
+
+[tool.poetry.build]
+generate-setup-file = false
+
+
+[tool.poetry.dependencies]
+python = "^3.9"
+requests = "2.28.1"
+
+
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.1.1" # Allows for testing of the project
+pytest-cov = "^4.0.0" # Allows to run coverage of the project
+moto = "^3.1.6" # Allows for mocking of AWS services
+
+
+[tool.poetry.group.cookiecutter]
+optional = true
+
+[tool.poetry.group.cookiecutter.dependencies]
+
+
+[tool.poetry.group.lint]
+optional = true
+
+[tool.poetry.group.lint.dependencies]
+flake8 = "^4.0.1"                         # Style Guide Enforcement
+pyproject-flake8 = "^0.0.1-alpha.4"       # Allows configuration of flake 8 from pyproject.toml
+flake8-bugbear = "^22.3.23"               # Finding likely bugs and design problems in your program.
+flake8-print = "^4.0.0"                   # Check for print statements in python files.
+flake8-docstrings = "^1.6.0"              # Include checks provided by pep257.
+flake8-annotations = "^2.8.0"             # check for presence of type annotations in function definitions.
+isort = "^5.10.1"                         # Sort imports
+yamllint = "^1.26.3"                      # Linter for YAML files
+bandit = {version = "^1.7.4", extras = ["toml"]}  # Security linter
+pre-commit = "^2.18.1"                    # Runs a pipeline before commiting code
+commitizen = "^2.27.0"                    # Check commit messages
+cz-github-jira-conventional = "^1.1.1"    # Extension to commitizen to check for JIRA ticket number
+black = "^22.6.0"                         # Python style checks
+
+
+[build-system]
+requires = ["poetry-core>=1.2.0rc1"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.black]
+line-length = 119
+target-version = ['py39']
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.venv
+  | \.env
+  | cdk.out
+  | \.vscode
+  | build
+  | dist
+  | \.mypy_cache
+)\
+'''
+
+[tool.isort]
+profile = 'black'
+force_single_line = true
+combine_as_imports = true
+lines_between_types = 1
+lines_after_imports = 2
+src_paths = ["src", "tests"]
+line_length = 119
+
+[tool.flake8]
+max-line-length = 119
+select = [  # Choose the flake8 errors to select globally here
+  "C",      # McCabe complexity
+  "E",      # pep8 errors
+  "W",      # pep8 warnings
+  "F",      # pyflakes errors
+  "N",      # naming conventions
+  "B",      # bugbear errors (needs plugin installed)
+  "ANN",    # flake8 annotations errors (needs plugin installed)
+  "T",      # flake8 print errors (needs plugin installed)
+  "D",      # flake8 doscstrings errors (needs plugin installed)
+  "B950",   #  Line too long. It considers "max-line-length" but only triggers when exceeded by more than 10%.
+]
+ignore = [   # Choose the flake8 errors to ignore globally here
+  "E501",    # Line too long  (using B950 instead, which has 10% tolerance)
+  "D107",    # Missing docstring in __init__
+  "D202",    # No blank lines allowed after function docstring
+  "D400",    # First line should end with a period
+  "D100",    # Missing docstring in public module
+  "D104",    # Missing docstring in public package
+  "ANN003",  # Missing type annotation for **kwargs
+  "ANN002",  # Missing type annotation for **args
+  "ANN1",    # Missing type annotation for self in methot or cls method
+]
+per-file-ignores = [     # Choose the flake8 errors to ignore per file here
+  "*/__init__.py:F401",  # Ignore imported but unused in __init__.py files
+  "tests/*:ANN,D",       # Ignore Docstring and annotations on tests
+]
+exclude = [
+    ".venv/*",
+    ".vscode/*",
+    "cdk.out/*",
+]
+# See other flake8 extensions here: https://github.com/DmytroLitvinov/awesome-flake8-extensions
+
+
+[tool.bandit]
+skips = [      # Choose the bandit errors to ignore globally
+  "B101"       # Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+]
+exclude_dirs = [
+  ".venv",
+  "cdk.out",
+]
+
+[tool.pytest.ini_options]
+minversion = "7.1"
+addopts = """
+  --verbose
+  --color=yes
+  --assert=plain
+  --cov-report term
+  --cov=src
+  --last-failed
+"""
+testpaths = [
+    "tests",
+]
+
+[tool.coverage.run]
+omit = ["*/tests/*"]    # Remove test files from coverage run.
+
+[tool.coverage.report]
+omit = ["*/tests/*"]    # Remove test files from coverage report.
+
+
+[tool.commitizen]
+name = "cz_github_jira_conventional"
+version = "0.1.0"
+ag_format = "$major.$minor.$patch$prerelease"
+version_files = [
+    "pyproject.toml:version"
+]
+jira_prefix = "TECH-"
+jira_base_url = "https://util.atlassian.net/"
+github_repo = "util-co/util-package-apo"

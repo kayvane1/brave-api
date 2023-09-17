@@ -1,0 +1,68 @@
+---
+name: Status Checks
+
+on:
+  push:
+    branches-ignore:
+      - production
+
+# Stops the currently running workflow if a new one has been triggered
+concurrency:
+  group: "${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Import Actions
+        uses: actions/checkout@v3
+        with:
+          repository: util-co/util-actions
+          path: ./.util
+          ref: refs/tags/v5
+          token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+
+      - name: Set up
+        uses: ./.util/actions/poetry/setup
+        with:
+          github_token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+
+      - name: Install Python Test Dependencies with Poetry
+        shell: bash
+        run: poetry install --with test
+
+      - name: Test
+        uses: ./.util/actions/poetry/test
+        with:
+          coverage: true
+          cc_test_reporter_id: "${{ secrets.CC_TEST_REPORTER_ID }}"
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Import Actions
+        uses: actions/checkout@v3
+        with:
+          repository: util-co/util-actions
+          path: ./.util
+          ref: refs/tags/v5
+          token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+
+      - name: Set up
+        uses: ./.util/actions/poetry/setup
+        with:
+          github_token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+
+      - name: Install Python Lint Dependencies with Poetry
+        shell: bash
+        run: poetry install --with lint
+
+      - name: Lint
+        uses: ./.util/actions/poetry/pre-commit-lint

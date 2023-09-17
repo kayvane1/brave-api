@@ -1,0 +1,28 @@
+---
+name: Reset Branches
+
+on:
+  schedule:
+    - cron: "20 1 * * 1"  # At 01:20 on Mondays
+
+jobs:
+  reset:
+    name: Reset Branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Import Actions
+        uses: actions/checkout@v3
+        with:
+          repository: util-co/util-actions
+          path: ./.util
+          ref: refs/tags/v5
+          token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+
+      - name: Reset development branch to staging
+        uses: ./.util/actions/github/reset-branch
+        with:
+          github_token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+          reset_branch: development
+          base_branch: staging

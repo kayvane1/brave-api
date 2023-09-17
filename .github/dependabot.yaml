@@ -1,0 +1,30 @@
+---
+version: 2
+registries:
+  github:
+    type: git
+    url: https://github.com
+    username: x-access-token
+    password: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+
+updates:
+  - package-ecosystem: pip
+    directory: /
+    target-branch: staging
+    versioning-strategy: lockfile-only
+    registries: "*"
+    schedule:
+      interval: weekly
+    labels:
+      - poetry
+      - dependabot
+
+  - package-ecosystem: github-actions
+    directory: /
+    target-branch: staging
+    registries: "*"
+    schedule:
+      interval: weekly
+    labels:
+      - actions
+      - dependabot
