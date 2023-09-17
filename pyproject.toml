@@ -142,7 +142,6 @@ addopts = """
   --assert=plain
   --cov-report term
   --cov=src
-  --last-failed
 """
 testpaths = [
     "tests",
