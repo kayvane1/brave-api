@@ -17,7 +17,7 @@ load_dotenv()
 openai.api_key = os.environ["OPENAI_API_KEY"]
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.info)
+logger.setLevel(logging.INFO)
 
 
 async def evaluate_sarcasm_prompt(text: str, **openai_kwargs) -> str:
