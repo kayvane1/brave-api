@@ -1,3 +1,5 @@
+import json
+
 import pandas as pd
 import pytest
 
@@ -5,7 +7,6 @@ from apo import MessageTemplate
 from apo.examples.sarcasm import evaluate_sarcasm_prompt
 from apo.gradient_descent import edit_prompt_with_gradients
 from apo.gradient_descent import generate_gradients
-from apo.utils.parser import parse_responses
 
 
 @pytest.fixture
@@ -137,11 +138,13 @@ async def test_edit_prompt_with_gradients(unclear_sarcasm_example, shared_data):
 
     prompt = MessageTemplate.load("src/apo/prompts/example_base_prompts/sarcasm/user.json")
 
-    assert len(parse_responses(gradients)) == 3
     edited_prompt = await edit_prompt_with_gradients(
         prompt=prompt.to_prompt(),
         error_str=error_string,
         gradients=gradients,
         steps_per_gradient=3,
     )
-    assert edited_prompt != prompt.to_prompt()
+
+    edited_prompts = json.loads(edited_prompt)["prompts"]
+
+    assert len(edited_prompts) == 3
