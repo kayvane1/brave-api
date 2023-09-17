@@ -1,3 +1,4 @@
+import json
 import os
 
 import openai
@@ -41,7 +42,9 @@ async def generate_gradients(prompt: str, error_str: str, num_feedbacks: int = 3
     generate_gradients.format_message(prompt=prompt, error_string=error_str, num_feedbacks=num_feedbacks)
     messages = [generate_gradients.to_prompt()]
     response = await llm.generate(messages=messages, **openai_kwargs)
-    return response["content"]
+    gradients = response["content"]
+    gradients_as_list = [reason["reason"] for reason in json.loads(gradients)["reasons"]]
+    return "\n".join(gradients_as_list)
 
 
 async def edit_prompt_with_gradients(
@@ -83,7 +86,3 @@ async def edit_prompt_with_gradients(
     messages = [edit_prompt.to_prompt()]
     response = await llm.generate(messages=messages, **openai_kwargs)
     return response["content"]
-
-
-if __name__ == "__main__":
-    pass

@@ -14,6 +14,65 @@
 - Iterate: Repeat these steps for `r` search depth iterations.
 Return Optimized Prompt: The algorithm ultimately returns an optimized prompt `p^` that maximizes the given metric function `m`.
 
+## Usage
+
+Note: Only step 2 of the algorithm is implemented at the moment. Step 3 is still in development.
+
+For an example input prompt and an example / series of examples the prompt can be optimised to improve performance:
+
+*Original Prompt*
+```
+    ## Task
+    Is this tweet sarcastic?
+
+    # Output format
+    Answer Yes or No as labels
+
+    # Prediction
+    Text: {text}
+    Label:
+```
+
+Run the gradient generation and prompt editing steps:
+
+```
+    unclear_sarcasm_example = "I love waking up at 4am on a Monday morning to prepare slides."
+    prediction = await evaluate_sarcasm_prompt(unclear_sarcasm_example)
+
+    prompt = MessageTemplate.load("src/apo/prompts/example_base_prompts/sarcasm/user.json")
+
+    error_string = f"{unclear_sarcasm_example}. \n Expected: Yes. \n Actual: No"
+    gradients = await generate_gradients(prompt=prompt.to_prompt(), error_str=error_string, num_feedbacks=3)
+
+    prompt = MessageTemplate.load("src/apo/prompts/example_base_prompts/sarcasm/user.json")
+
+    edited_prompt = await edit_prompt_with_gradients(
+        prompt=prompt.to_prompt(),
+        error_str=error_string,
+        gradients=gradients,
+        steps_per_gradient=3,
+    )
+
+    edited_prompts = json.loads(edited_prompt)["prompts"]
+
+    print(edited_prompts)
+
+```
+
+New Prompts generated:
+
+```
+[
+    {'role': 'user',
+    'content': "\n# Task\nIs this tweet sarcastic?\n\n# Output format\nAnswer Yes or No as labels\n\n# Prediction\nText: {text}\nLabel:\n\n# Examples\n- Text: I can't wait to spend my entire weekend doing laundry.\n  Label: Yes\n\n# Additional Instructions\nLook for phrases that express exaggerated enthusiasm or excitement, but are followed by a negative or undesirable action."},
+
+    {'role': 'user', 'content': '\n# Task\nIs this tweet sarcastic?\n\n# Output format\nAnswer Yes or No as labels\n\n# Prediction\nText: {text}\nLabel:\n\n# Examples\n- Text: Wow, I just love getting stuck in traffic for hours!\n  Label: Yes\n\n# Additional Instructions\nPay attention to tweets that express positive emotions towards unpleasant or frustrating situations.'},
+
+    {'role': 'user', 'content': '\n# Task\nIs this tweet sarcastic?\n\n# Output format\nAnswer Yes or No as labels\n\n# Prediction\nText: {text}\nLabel:\n\n# Examples\n- Text: Oh great, another meeting to discuss the color of the office walls.\n  Label: Yes\n\n# Additional Instructions\nIdentify tweets that convey a sense of annoyance or frustration towards mundane or trivial matters.'}
+]
+```
+
+
 ## Installation
 
 This package uses Poetry for dependency management. To start developing here, you need to install Poetry
