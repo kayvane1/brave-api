@@ -1,0 +1,1 @@
+{"role": "user", "content": "\nGenerate a variation of the following instruction while keeping the semantic meaning.\n\nInput: {prompt_instruction}\n\nOutput:\n", "name": null}

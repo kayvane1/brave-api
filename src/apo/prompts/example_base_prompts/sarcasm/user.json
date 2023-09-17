@@ -1,0 +1,1 @@
+{"role": "user", "content": "\n# Task\nIs this tweet sarcastic?\n\n# Output format\nAnswer Yes or No as labels\n\n# Prediction\nText: {text}\nLabel:\n", "name": null}

@@ -1,0 +1,1 @@
+{"role": "user", "content": "\nI'm trying to write a zero-shot classifier prompt.\n\nMy current prompt is:\n\"{prompt}\"\n\nBut this prompt gets the following examples wrong:\n{error_string}\n\ngive {num_feedbacks} reasons why the prompt could\nhave gotten these examples wrong.\nWrap each reason with <START> and <END>\n", "name": null}

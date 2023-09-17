@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "util-package-apo"
+name = "apo "
 version = "0.1.0"
-description = "Automatic Prompt Optimisation"
-authors = ["Util Engineering <eng@util.co>"]
+description = " Test"
+authors = ["Kayvane Shakerifar (Util)"]
 readme = "README.md"
-homepage = "https://github.com/util-co/util-package-apo"
-repository = "https://github.com/util-co/util-package-apo"
-keywords = ['prompt-optimisation', ' prompt-engineering', ' llm']  # noqa
+homepage = "https://github.com/kayvane1/apo"
+repository = "https://github.com/kayvane1/apo"
+keywords = ['llm', 'prompt-engineering']  # noqa
 packages = [
     { include = "apo", from = "src" },
 ]
@@ -16,24 +16,24 @@ generate-setup-file = false
 
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "3.9.10"
 requests = "2.28.1"
-
+openai = "^0.27.8"
+python-dotenv = "^1.0.0"
+tiktoken = "^0.4.0"
+tenacity = "^8.2.2"
+aiofiles = "^23.1.0"
+pandas = "^2.1.0"
+pytest-asyncio = "^0.21.1"
 
 [tool.poetry.group.test]
 optional = true
+
 
 [tool.poetry.group.test.dependencies]
 pytest = "^7.1.1" # Allows for testing of the project
 pytest-cov = "^4.0.0" # Allows to run coverage of the project
 moto = "^3.1.6" # Allows for mocking of AWS services
-
-
-[tool.poetry.group.cookiecutter]
-optional = true
-
-[tool.poetry.group.cookiecutter.dependencies]
-
 
 [tool.poetry.group.lint]
 optional = true
@@ -49,10 +49,12 @@ isort = "^5.10.1"                         # Sort imports
 yamllint = "^1.26.3"                      # Linter for YAML files
 bandit = {version = "^1.7.4", extras = ["toml"]}  # Security linter
 pre-commit = "^2.18.1"                    # Runs a pipeline before commiting code
-commitizen = "^2.27.0"                    # Check commit messages
-cz-github-jira-conventional = "^1.1.1"    # Extension to commitizen to check for JIRA ticket number
 black = "^22.6.0"                         # Python style checks
 
+
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.24.0"
 
 [build-system]
 requires = ["poetry-core>=1.2.0rc1"]
@@ -69,7 +71,6 @@ extend-exclude = '''
   | \.git
   | \.venv
   | \.env
-  | cdk.out
   | \.vscode
   | build
   | dist
@@ -110,6 +111,8 @@ ignore = [   # Choose the flake8 errors to ignore globally here
   "ANN003",  # Missing type annotation for **kwargs
   "ANN002",  # Missing type annotation for **args
   "ANN1",    # Missing type annotation for self in methot or cls method
+  "W503",    # Line break occurred before a binary operator
+  "E203",    # Whitespace before ':'
 ]
 per-file-ignores = [     # Choose the flake8 errors to ignore per file here
   "*/__init__.py:F401",  # Ignore imported but unused in __init__.py files
@@ -118,18 +121,17 @@ per-file-ignores = [     # Choose the flake8 errors to ignore per file here
 exclude = [
     ".venv/*",
     ".vscode/*",
-    "cdk.out/*",
 ]
 # See other flake8 extensions here: https://github.com/DmytroLitvinov/awesome-flake8-extensions
 
 
 [tool.bandit]
 skips = [      # Choose the bandit errors to ignore globally
-  "B101"       # Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+  "B101",      # Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+  "B104",      # Possible binding to all interfaces
 ]
 exclude_dirs = [
   ".venv",
-  "cdk.out",
 ]
 
 [tool.pytest.ini_options]
@@ -151,15 +153,3 @@ omit = ["*/tests/*"]    # Remove test files from coverage run.
 
 [tool.coverage.report]
 omit = ["*/tests/*"]    # Remove test files from coverage report.
-
-
-[tool.commitizen]
-name = "cz_github_jira_conventional"
-version = "0.1.0"
-ag_format = "$major.$minor.$patch$prerelease"
-version_files = [
-    "pyproject.toml:version"
-]
-jira_prefix = "TECH-"
-jira_base_url = "https://util.atlassian.net/"
-github_repo = "util-co/util-package-apo"
