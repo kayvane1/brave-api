@@ -20,7 +20,7 @@ logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
 
-async def evaluate_sarcasm_prompt(text: str, **openai_kwargs) -> str:
+async def predict_sarcarsm_with_llm(text: str, **openai_kwargs) -> str:
     """Asynchronously evaluate a sarcasm prompt and return the output"""
     evaluate_prompt = MessageTemplate.load("src/apo/prompts/example_base_prompts/sarcasm/user.json")
     evaluate_prompt.format_message(text=text)
@@ -29,7 +29,7 @@ async def evaluate_sarcasm_prompt(text: str, **openai_kwargs) -> str:
     return response["content"]
 
 
-async def run_sarcasm_example() -> None:
+async def run_sarcasm_single_example() -> None:
     """Run the sarcasm example"""
 
     unclear_sarcasm_example = "I love waking up at 4am on a Monday morning to prepare slides."
@@ -53,4 +53,4 @@ async def run_sarcasm_example() -> None:
 
 
 if __name__ == "__main__":
-    asyncio.run(run_sarcasm_example())
+    asyncio.run(run_sarcasm_single_example())

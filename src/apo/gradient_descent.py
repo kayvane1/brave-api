@@ -9,9 +9,8 @@ from typing import List
 import openai
 import pandas as pd
 
-from datasets import load_metric
 from dotenv import load_dotenv
-from tqdm.asyncio import tqdm
+from evaluate import load_metric
 
 from apo import ChatGPT as llm
 from apo import MessageTemplate
@@ -155,8 +154,10 @@ async def evaluate_prompt(
     input_cols: List,
     label_col: str = "label",
     concurrency: int = 10,
+    metric: str = "accuracy",
+    label_mapping: Dict = None,
     **openai_kwargs,
-) -> str:
+) -> float:
     """
     Evaluate a MessageTemplate prompt using a given dataset.
 
@@ -175,17 +176,14 @@ async def evaluate_prompt(
         The name of the column containing the ground-truth labels.
     """
 
-    inputs = data[[input_cols]].to_dict("records")
+    inputs = data[input_cols].to_dict("records")
 
     semaphore = asyncio.Semaphore(concurrency)
-    tasks = [run_prompt(semaphore, prompt, **prompt_input, **openai_kwargs) for prompt_input in inputs]
+    tasks = [run_prompt(semaphore, prompt, prompt_input, **openai_kwargs) for prompt_input in inputs]
 
-    results = []
+    results = await asyncio.gather(*tasks)
 
-    for future in tqdm(asyncio.as_completed(tasks), total=len(tasks)):
-        result = await future
-        if result and len(result) > 0:
-            results.append(result)
+    if label_mapping is not None:
+        results = [label_mapping[result] for result in results]
 
-    results = pd.DataFrame(results, columns=["prediction"])
-    return evaluate(results["prediction"].to_list(), data[label_col].to_list(), "accuracy")
+    return evaluate(results, data[label_col].tolist(), metric)
