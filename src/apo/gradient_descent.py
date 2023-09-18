@@ -6,11 +6,11 @@ from asyncio import Semaphore
 from typing import Dict
 from typing import List
 
+import evaluate
 import openai
 import pandas as pd
 
 from dotenv import load_dotenv
-from evaluate import load_metric
 
 from apo import ChatGPT as llm
 from apo import MessageTemplate
@@ -109,7 +109,7 @@ def compute_accuracy(predictions: pd.Series, labels: pd.Series) -> float:
     return (predictions == labels).sum() / len(predictions)
 
 
-def evaluate(predictions: List, labels: List, metric: str) -> float:
+def evaluate_predictions(predictions: List, labels: List, metric: str) -> float:
     """
     Evaluate the model's predictions using various metrics.
 
@@ -131,7 +131,7 @@ def evaluate(predictions: List, labels: List, metric: str) -> float:
     """
 
     # Map metric names to metric functions
-    metric_fn = load_metric(metric)
+    metric_fn = evaluate.load(metric)
 
     # Compute the metric
     if metric in ["accuracy", "f1", "recall"]:
@@ -186,4 +186,4 @@ async def evaluate_prompt(
     if label_mapping is not None:
         results = [label_mapping[result] for result in results]
 
-    return evaluate(results, data[label_col].tolist(), metric)
+    return evaluate_predictions(results, data[label_col].tolist(), metric)
