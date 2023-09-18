@@ -1,3 +1,5 @@
+# Developed by: https://github.com/kstathou
+
 import json
 import string
 

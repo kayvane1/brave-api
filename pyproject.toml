@@ -25,6 +25,7 @@ tenacity = "^8.2.2"
 aiofiles = "^23.1.0"
 pandas = "^2.1.0"
 pytest-asyncio = "^0.21.1"
+datasets = "^2.14.5"
 
 [tool.poetry.group.test]
 optional = true
