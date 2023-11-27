@@ -82,9 +82,3 @@ repos:
             custom,
           ]
         stages: [commit]
-
-      - id: commit-message
-        name: Check commit message
-        entry: poetry run cz check --commit-msg-file
-        language: system
-        stages: [commit-msg]

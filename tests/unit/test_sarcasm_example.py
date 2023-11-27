@@ -5,9 +5,11 @@ import pytest
 
 from apo import MessageTemplate
 from apo.examples.sarcasm import predict_sarcarsm_with_llm
-from apo.gradient_descent import edit_prompt_with_gradients
-from apo.gradient_descent import evaluate_prompt
-from apo.gradient_descent import generate_gradients
+from apo.gradient_descent import APO
+
+
+# from apo.gradient_descent import evaluate_prompt
+# from apo.gradient_descent import generate_gradients
 
 
 @pytest.fixture
@@ -116,11 +118,12 @@ async def test_generate_gradients(unclear_sarcasm_example, shared_data):
     """
     Test the generate gradients prompt
     """
+    apo = APO(asynchronous=True)
     prediction = await predict_sarcarsm_with_llm(unclear_sarcasm_example)
     prompt = MessageTemplate.load("src/apo/prompts/example_base_prompts/sarcasm/user.json")
     assert prediction == "No"
     error_string = f"{unclear_sarcasm_example}. \n Expected: Yes. \n Actual: No"
-    gradients = await generate_gradients(prompt=prompt.to_prompt(), error_str=error_string, num_feedbacks=3)
+    gradients = await apo.generate_gradients(prompt=prompt.to_prompt(), error_str=error_string, num_feedbacks=3)
     assert len(gradients.split("\n"))
 
     # Cache the gradients for later use in shared_data fixture
@@ -137,9 +140,10 @@ async def test_edit_prompt_with_gradients(unclear_sarcasm_example, shared_data):
     gradients = shared_data["cached_gradients"]
     error_string = shared_data["cached_error_string"]
 
+    apo = APO(asynchronous=True)
     prompt = MessageTemplate.load("src/apo/prompts/example_base_prompts/sarcasm/user.json")
 
-    edited_prompt = await edit_prompt_with_gradients(
+    edited_prompt = await apo.edit_prompt_with_gradients(
         prompt=prompt.to_prompt(),
         error_str=error_string,
         gradients=gradients,
@@ -159,16 +163,15 @@ async def test_evaluate_prompt(sarcasm_batch):
     # map label to string, 1 = Yes, 0 = No
     label_mapper = {"Yes": 1, "No": 0}
 
-    # Load the prompt
+    apo = APO(asynchronous=True)
     prompt = MessageTemplate.load("src/apo/prompts/example_base_prompts/sarcasm/user.json")
 
     # Evaluate the prompt
-    predictions = await evaluate_prompt(
+    predictions = await apo.evaluate_prompt(
         prompt=prompt,
         data=sarcasm_batch,
         input_cols=["text"],
         label_col="label",
-        concurrency=10,
         metric="accuracy",
         label_mapping=label_mapper,
     )

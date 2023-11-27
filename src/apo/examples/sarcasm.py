@@ -1,20 +1,15 @@
 import asyncio
 import json
 import logging
-import os
-
-import openai
 
 from dotenv import load_dotenv
 
-from apo import ChatGPT as llm
 from apo import MessageTemplate
-from apo.gradient_descent import edit_prompt_with_gradients
-from apo.gradient_descent import generate_gradients
+from apo.gradient_descent import APO
+from apo.gradient_descent import ChatGPT
 
 
 load_dotenv()
-openai.api_key = os.environ["OPENAI_API_KEY"]
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
@@ -22,11 +17,12 @@ logger.setLevel(logging.INFO)
 
 async def predict_sarcarsm_with_llm(text: str, **openai_kwargs) -> str:
     """Asynchronously evaluate a sarcasm prompt and return the output"""
+    llm = ChatGPT()
     evaluate_prompt = MessageTemplate.load("src/apo/prompts/example_base_prompts/sarcasm/user.json")
     evaluate_prompt.format_message(text=text)
     messages = [evaluate_prompt.to_prompt()]
-    response = await llm.generate(messages=messages, **openai_kwargs)
-    return response["content"]
+    response = await llm._agenerate(messages=messages, **openai_kwargs)
+    return response.content
 
 
 async def run_sarcasm_single_example() -> None:
@@ -36,11 +32,12 @@ async def run_sarcasm_single_example() -> None:
     prompt = MessageTemplate.load("src/apo/prompts/example_base_prompts/sarcasm/user.json")
 
     error_string = f"{unclear_sarcasm_example}. \n Expected: Yes. \n Actual: No"
-    gradients = await generate_gradients(prompt=prompt.to_prompt(), error_str=error_string, num_feedbacks=3)
+    apo = APO(asynchronous=True)
+    gradients = await apo.generate_gradients(prompt=prompt.to_prompt(), error_str=error_string, num_feedbacks=3)
 
     prompt = MessageTemplate.load("src/apo/prompts/example_base_prompts/sarcasm/user.json")
 
-    edited_prompt = await edit_prompt_with_gradients(
+    edited_prompt = await apo.edit_prompt_with_gradients(
         prompt=prompt.to_prompt(),
         error_str=error_string,
         gradients=gradients,
