@@ -9,7 +9,7 @@ from tenacity import wait_fixed
 
 from brave.client import BraveAPIClient
 from brave.exceptions import BraveError
-from brave.models import BraveSearchResponse
+from brave.types import WebSearchApiResponse
 
 
 class AsyncBrave(BraveAPIClient):
@@ -37,20 +37,20 @@ class AsyncBrave(BraveAPIClient):
     async def search(
         self,
         q: str,
-        country: str = None,
-        search_lang: str = None,
-        ui_lang: str = None,
-        count: int = 20,
-        offset: int = 0,
-        safesearch: str = "moderate",
-        freshness: str = None,
-        text_decorations: bool = True,
-        spellcheck: bool = True,
-        result_filter: str = None,
-        goggles_id: str = None,
-        units: str = None,
-        extra_snippets: bool = False,
-    ) -> BraveSearchResponse:
+        country: Optional[str] = None,
+        search_lang: Optional[str] = None,
+        ui_lang: Optional[str] = None,
+        count: Optional[int] = 20,
+        offset: Optional[int] = 0,
+        safesearch: Optional[str] = "moderate",
+        freshness: Optional[str] = None,
+        text_decorations: Optional[bool] = True,
+        spellcheck: Optional[bool] = True,
+        result_filter: Optional[str] = None,
+        goggles_id: Optional[str] = None,
+        units: Optional[str] = None,
+        extra_snippets: Optional[bool] = False,
+    ) -> WebSearchApiResponse:
         """
         Perform a search using the Brave Search API.
 
@@ -119,4 +119,4 @@ class AsyncBrave(BraveAPIClient):
             raise BraveError(f"API Error: {response.status_code} - {response.text}")
 
         # return response.json()
-        return BraveSearchResponse.model_validate(response.json())
+        return WebSearchApiResponse.model_validate(response.json())
