@@ -29,15 +29,19 @@ class WebSearchApiResponse(BaseModel):
     type: str = Field(default="search", description="The type of web search API result. The value is always search.")
     web: Search = Field(description="Web search results relevant to the query.")
     discussions: Optional[Discussions] = Field(
-        description="Discussions clusters aggregated from forum posts that are relevant to the query."
+        default=None, description="Discussions clusters aggregated from forum posts that are relevant to the query."
     )
-    faq: Optional[FAQ] = Field(description="Frequently asked questions that are relevant to the search query.")
-    infobox: Optional[GraphInfobox] = Field(description="Aggregated information on an entity showable as an infobox.")
+    faq: Optional[FAQ] = Field(
+        default=None, description="Frequently asked questions that are relevant to the search query."
+    )
+    infobox: Optional[GraphInfobox] = Field(
+        default=None, description="Aggregated information on an entity showable as an infobox."
+    )
     locations: Optional[Locations] = Field(
-        description="Places of interest (POIs) relevant to location sensitive queries."
+        default=None, description="Places of interest (POIs) relevant to location sensitive queries."
     )
-    news: Optional[News] = Field(description="News results relevant to the query.")
-    videos: Optional[Videos] = Field(description="Videos relevant to the query.")
+    news: Optional[News] = Field(default=None, description="News results relevant to the query.")
+    videos: Optional[Videos] = Field(default=None, description="Videos relevant to the query.")
 
     def __str__(self) -> str:
         """Return the model as a JSON string."""

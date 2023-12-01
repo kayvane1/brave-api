@@ -119,3 +119,15 @@ class Videos(BaseModel):  # Replace with actual model definition
     """Videos model"""
 
     pass
+
+
+class FAQ(BaseModel):  # Replace with actual model definition
+    """FAQ model"""
+
+    pass
+
+
+class DeepResult(BaseModel):  # Replace with actual model definition
+    """DeepResult model"""
+
+    pass
