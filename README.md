@@ -3,7 +3,11 @@
 ## Overview
 Python wrapper for the [Brave Search API](https://search.brave.com/api). Currently implements the web search endpoint, further endpoints will be added in the future.
 
+Brave is a powerful search engine that allows for the usage of `goggles` to rerank your search results to meet your use-case. [Goggles](https://search.brave.com/help/goggles) enable any individual—or community of people—to alter the ranking of Brave Search by using a set of instructions (rules and filters). Anyone can create, apply, or extend a Goggle. Essentially Goggles act as a custom re-ranking on top of the Brave search index.
+
 ## Usage
+
+The module supports both synchronous and asynchronous requests. Your Brave API key can either be passed as an environment variable under `BRAVE_API_KEY` or as an argument to the Brave class.
 
 ```python
 
