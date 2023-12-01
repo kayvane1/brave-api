@@ -18,6 +18,9 @@ generate-setup-file = false
 [tool.poetry.dependencies]
 python = "^3.11"
 requests = "^2.26.0"
+httpx = "^0.25.2"
+tenacity = "^8.2.3"
+pydantic = "^2.5.2"
 
 
 [tool.poetry.group.test]
@@ -123,6 +126,7 @@ exclude = [
 skips = [      # Choose the bandit errors to ignore globally
   "B101",      # Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
   "B104",      # Possible binding to all interfaces
+  "B113",      # Requests call without timeout
 ]
 exclude_dirs = [
   ".venv",
