@@ -37,26 +37,30 @@ brave = AsyncBrave()
 query = "cobalt mining"
 num_results = 10
 
-results = await brave.search(q=query, goggles_id=goggle_url, count=num_results, result_filter=result_filter)
+results = await brave.search(q=query, count=num_results)
 ```
 ## Features
 
 ### Download PDFs:
 
-    ```python
-    from brave import Brave
+Use the `download_pdfs` method to download all PDFs found in the search results. This method returns a list of file paths to the downloaded PDFs. You can use Goggles to boost PDFs in your search results.
 
-    brave = Brave()
+```python
+from brave import Brave
 
-    query = "cobalt mining"
-    num_results = 10
+brave = Brave()
 
-    search_results = brave.search(q=query, count=num_results)
+query = "cobalt mining"
+num_results = 10
 
-    search_results.download_pdfs()
-    ```
+search_results = brave.search(q=query, count=num_results)
+
+search_results.download_pdfs()
+```
 
 ### Aggregate Price Data
+
+Use the `product_prices` method to get a list of prices for a set of search results. This method returns a list of prices found in the search results. If no prices are found, an empty list is returned. This method does not currently support converting currencies.
 
 ```python
 
@@ -75,6 +79,8 @@ results = await brave.search(q=query, goggles_id=goggle_url, count=num_results, 
 ```
 
 ### Aggregate Review Data
+
+Use the `average_product_review_score` method to get the average review score for a set of search results. This method converts all review scores to a 100 point scale.
 
 ```python
 
