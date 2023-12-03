@@ -10,25 +10,24 @@ from pydantic import Field
 
 from brave.exceptions import BraveError
 
-from .meta_url import MetaUrl
-from .not_implemented import FAQ
-from .not_implemented import QA
-from .not_implemented import Article
-from .not_implemented import Book
-from .not_implemented import Cluster
-from .not_implemented import CreativeWork
-from .not_implemented import DeepResult
-from .not_implemented import Location
-from .not_implemented import Movie
-from .not_implemented import MusicRecording
-from .not_implemented import Product
-from .not_implemented import Rating
-from .not_implemented import Restaurant
-from .not_implemented import Review
-from .not_implemented import Software
-from .not_implemented import Video
+from ..not_implemented import CreativeWork
+from ..not_implemented import DeepResult
+from ..not_implemented import Movie
+from ..not_implemented import MusicRecording
+from ..not_implemented import Software
+from ..not_implemented import Video
+from ..shared.meta_url import MetaUrl
+from ..shared.thumbnail import Thumbnail
+from .article import Article
+from .book import Book
+from .faq import FAQ
+from .faq import QA
+from .location_result import LocationResult
+from .location_result import Locations
+from .product import Product
+from .rating import Rating
 from .result import Result
-from .thumbnail import Thumbnail
+from .reviews import Review
 
 
 logger = logging.getLogger(__name__)
@@ -56,10 +55,10 @@ class SearchResult(Result):
     thumbnail: Optional[Thumbnail] = Field(default=None, description="The thumbnail of the web search result.")
     age: Optional[str] = Field(default=None, description="A string representing the age of the web search result.")
     language: str = Field(description="The main language on the web search result.")
-    restaurant: Optional[Restaurant] = Field(
+    restaurant: Optional[LocationResult] = Field(
         default=None, description="If a location result, associated restaurant information."
     )
-    locations: Optional[List[Location]] = Field(
+    locations: Optional[Locations] = Field(
         default=None, description="The locations associated with the web search result."
     )
     video: Optional[Video] = Field(default=None, description="The video associated with the web search result.")
@@ -78,13 +77,13 @@ class SearchResult(Result):
     product: Optional[Product] = Field(
         default=None, description="The main product and a review that is found on the web search result page."
     )
-    product_cluster: Optional[List[Product]] = Field(
+    product_cluster: Optional[List[Product | Review]] = Field(
         default=None, description="A list of products and reviews that are found on the web search result page."
     )
     cluster_type: Optional[str] = Field(
         default=None, description="A type representing a cluster. The value can be product_cluster."
     )
-    cluster: Optional[Cluster] = Field(default=None, description="A list of web search results.")
+    cluster: Optional[List[Result]] = Field(default=[], description="A list of web search results.")
     creative_work: Optional[CreativeWork] = Field(
         default=None, description="Aggregated information on the creative work found on the web search result."
     )

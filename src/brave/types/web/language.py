@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import BaseModel
 from pydantic import Field
 
@@ -9,4 +11,4 @@ class Language(BaseModel):
     url: https://api.search.brave.com/app/documentation/web-search/responses#Language
     """
 
-    main: str = Field(description="The main language seen in the string.")
+    main: Optional[str] = Field(default=None, description="The main language seen in the string.")
