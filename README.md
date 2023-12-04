@@ -26,6 +26,15 @@ search_results = brave.search(q=query, count=num_results)
 
 ```
 
+The `search_results` object will include all the data returned by the Brave Search API.
+You can access `Web`, `News` and `Video` results from the websearch endpoint as follows:
+
+```python
+web_results = search_results.web_results
+news_results = search_results.news_results
+video_results = search_results.video_results
+```
+
 The module also supports asynchronous requests:
 
 ```python
