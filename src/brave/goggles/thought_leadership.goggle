@@ -9,38 +9,38 @@ $discard
 ! Generic boosting
 ! ################
 ! Allow .org websites
-*.org^|$boost=3
+*.org^|$boost=2
 ! ################
 ! boost blog subdomains
-/blog.$boost=2
+/blog.$boost=1
 
 ! In-line boosts
 ! ##############
-*.pdf|$boost=5
-*syllabus*$boost=3
+*.pdf|$boost=2
+*syllabus*$boost=2
 
 ! Boost some results
-$site=aeon.co$boost=3
-$site=hbr.org$boost=3
+$site=aeon.co$boost=4
+$site=hbr.org$boost=4
 $site=ted.com$boost=3
 $site=forbes.com$boost=2
-$site=mckinsey.com$boost=3
-$site=economist.com$boost=3
+$site=mckinsey.com$boost=4
+$site=economist.com$boost=4
 $site=inc.com$boost=3
 $site=fastcompany.com$boost=3
 $site=nielsen.com/insights/$boost=3
-$site=sloanreview.mit.edu$boost=3
-$site=ssir.org$boost=3
-$site=hks.harvard.edu$boost=2
-$site=knowledge.wharton.upenn.edu$boost=3
+$site=sloanreview.mit.edu$boost=4
+$site=ssir.org$boost=4
+$site=hks.harvard.edu$boost=4
+$site=knowledge.wharton.upenn.edu$boost=4
 $site=brookings.edu$boost=3
 $site=weforum.org$boost=3
-$site=rand.org$boost=3
-$site=bain.com$boost=3
-$site=nature.com/outlook$boost=3
-$site=longitude.ft.com$boost=3
-$site=strategy-business.com$boost=3
-$site=stratechery.com$boost=3
+$site=rand.org$boost=4
+$site=bain.com$boost=4
+$site=nature.com/outlook$boost=4
+$site=longitude.ft.com$boost=4
+$site=strategy-business.com$boost=4
+$site=stratechery.com$boost=4
 $site=thegatesnotes.com$boost=3
 $site=quantamagazine.org$boost=3
 $site=paulgraham.com$boost=3
