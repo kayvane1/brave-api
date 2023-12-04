@@ -51,29 +51,42 @@ class WebSearchApiResponse(BaseModel):
         return self.model_dump_json(indent=4, exclude_unset=True)
 
     @property
-    def results(self) -> List[SearchResult]:
+    def web_results(self) -> List[SearchResult]:
         """Property to access the list of search results directly."""
-        return self.web.results if self.web and self.web.results else []
+        _results = self.model_dump(exclude_defaults=True, exclude_unset=True)
+        return _results.get("web").get("results") if self.web and self.web.results else []
 
     @property
     def urls(self) -> List[str]:
         """Return a list of URLs."""
-        return [result.url for result in self.results if result.url]
+        return [result.url for result in self.web_results if result.url]
 
     @property
     def review_urls(self) -> List[str]:
         """Return a list of review URLs."""
-        return [result.url for result in self.results if result.subtype == "product" and result.review]
+        return [result.url for result in self.web_results if result.subtype == "product" and result.review]
 
     @property
     def descriptions(self) -> List[str]:
         """Return a list of descriptions."""
-        return [result.description for result in self.results if result.description]
+        return [result.description for result in self.web_results if result.description]
+
+    @property
+    def news_results(self) -> List[str]:
+        """Return a list of news articles."""
+        _results = self.model_dump(exclude_defaults=True, exclude_unset=True)
+        return _results.get("news").get("results") if self.news else []
+
+    @property
+    def video_results(self) -> List[str]:
+        """Return a list of video links."""
+        _results = self.model_dump(exclude_defaults=True, exclude_unset=True)
+        return _results.get("videos").get("results") if self.videos else []
 
     @property
     def product_cluster(self) -> List[str]:
         """Return a list of product clusters."""
-        return [result.product_cluster for result in self.results if result.subtype == "product_cluster"][0]
+        return [result.product_cluster for result in self.web_results if result.subtype == "product_cluster"][0]
 
     def download_all_pdfs(self, path: str = "downloads") -> None:
         """Download PDFs for all search results."""
@@ -84,7 +97,9 @@ class WebSearchApiResponse(BaseModel):
     def product_prices(self) -> List[int]:
         """Return a list of product prices."""
         if len(self.product_cluster) == 0:
-            return [float(result.product.price) for result in self.results if result.product and result.product.price]
+            return [
+                float(result.product.price) for result in self.web_results if result.product and result.product.price
+            ]
         else:
             return [float(result.price) for result in self.product_cluster]
 
@@ -98,7 +113,7 @@ class WebSearchApiResponse(BaseModel):
         if len(self.product_cluster) == 0:
             ratings = [
                 float(result.product.rating.ratingValue) / float(result.product.rating.bestRating)
-                for result in self.results
+                for result in self.web_results
                 if result.product and result.product.rating
             ]
         else:
