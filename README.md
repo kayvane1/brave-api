@@ -9,6 +9,13 @@ Notes:
 - This repo is under active development and is not yet ready for production use.
 - Pypi is currently not accepting new registrations, so this package is not yet available on Pypi. Once Pypi is accepting new registrations, this package will be available on Pypi.
 
+## Installation
+To get started, install the package using pip:
+
+```bash
+pip install brave-search
+```
+
 ## Usage
 
 The module supports both synchronous and asynchronous requests. Your Brave API key can either be passed as an environment variable under `BRAVE_API_KEY` or as an argument to the Brave class.
@@ -137,7 +144,7 @@ num_results = 10
 search_results = brave.search(q=query, goggles_id=thought_leadership, count=num_results)
 ```
 
-## Installation
+## Local Installation
 
 This package uses Poetry for dependency management. To start developing here, you need to install Poetry
 
