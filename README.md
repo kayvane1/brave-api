@@ -6,8 +6,7 @@ Python wrapper for the [Brave Search API](https://search.brave.com/api).
 Brave Search doesn’t track you or your queries, it's a privacy-preserving alternative to Google Search. It offers many endpoints for developers to build on top of. This module is a wrapper for the Brave Search API.
 
 Notes:
-- This repo is under active development and is not yet ready for production use.
-- Pypi is currently not accepting new registrations, so this package is not yet available on Pypi. Once Pypi is accepting new registrations, this package will be available on Pypi.
+- This repo is under active development and is not yet ready for production use, please raise any issues you find / PRs with fixes.
 
 ## Installation
 To get started, install the package using pip:
