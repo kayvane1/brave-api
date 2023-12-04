@@ -1,0 +1,35 @@
+! name: Thought Leadership
+! description: Rerank content to boost sites which provide thought leadership articles
+! public: true
+! author: Goggles 101
+! avatar: #000000
+
+! Remove results not matching any other rule
+$discard
+
+! Boost some results
+$boost=3,site=aeon.co
+$boost=3,site=hbr.org
+$boost=3,site=ted.com
+$boost=3,site=hbr.org
+$boost=2,site=forbes.com
+$boost=3,site=mckinsey.com
+$boost=3,site=economist.com
+$boost=3,site=inc.com
+$boost=3,site=fastcompany.com
+$boost=3,site=nielsen.com/insights/
+$boost=3,site=sloanreview.mit.edu
+$boost=3,site=ssir.org
+$boost=2,site=hks.harvard.edu
+$boost=3,site=knowledge.wharton.upenn.edu
+$boost=3,site=brookings.edu
+$boost=3,site=weforum.org
+$boost=3,site=rand.org
+$boost=3,site=bain.com
+$boost=3,site=nature.com/outlook
+$boost=3,site=longitude.ft.com
+$boost=3,site=strategy-business.com
+$boost=3,site=stratechery.com
+$boost=3,site=thegatesnotes.com
+$boost=3,site=quantamagazine.org
+$boost=3,site=paulgraham.com
