@@ -7,6 +7,10 @@
 ! Remove results not matching any other rule
 $discard
 
+! Generic boosting
+/.org|$boost=2
+/blog.$boost=2
+
 ! Boost some results
 $boost=3,site=aeon.co
 $boost=3,site=hbr.org
