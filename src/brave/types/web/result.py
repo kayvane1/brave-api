@@ -16,8 +16,12 @@ class Result(BaseModel):
 
     title: str = Field(description="The title of the web page.")
     url: HttpUrl = Field(description="The URL where the page is served.")
-    is_source_local: bool = Field(description="Indicates if the source of the web page is local.")
-    is_source_both: bool = Field(description="Indicates if the source of the web page is both local and non-local.")
+    is_source_local: Optional[bool] = Field(
+        default=None, description="Indicates if the source of the web page is local."
+    )
+    is_source_both: Optional[bool] = Field(
+        default=None, description="Indicates if the source of the web page is both local and non-local."
+    )
     description: str = Field(description="A description for the web page.")
     page_age: Optional[str] = Field(default=None, description="A date representing the age of the web page.")
     page_fetched: Optional[str] = Field(

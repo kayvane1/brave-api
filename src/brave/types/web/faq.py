@@ -8,6 +8,13 @@ from pydantic import HttpUrl
 from ..shared.meta_url import MetaUrl
 
 
+class QAPage(BaseModel):
+    """Aggreated result from a question answer page."""
+
+    question: str = Field(description="The question being asked.")
+    answer: str = Field(description="The answer to the question.")
+
+
 class QA(BaseModel):
     """A question-answer result."""
 
