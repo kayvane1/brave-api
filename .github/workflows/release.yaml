@@ -11,27 +11,14 @@ on:
       - pyproject.toml
 
 jobs:
-  release:
-    name: Release
+  test:
+    name: Create Release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Import Actions
-        uses: actions/checkout@v3
-        with:
-          repository: util-co/util-actions
-          path: ./.util
-          ref: refs/tags/v5
-          token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
-
-      - name: Set up
-        uses: ./.util/actions/poetry/setup
 
       - name: Release
-        uses: ./.util/actions/poetry/release
+        uses: ./.github/actions/release
         with:
-          github_token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           build_artifacts: true

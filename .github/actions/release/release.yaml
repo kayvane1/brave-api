@@ -1,0 +1,63 @@
+---
+name: Release Version
+description: Releases a new version using Poetry
+
+inputs:
+  github_token:
+    description: Token to authenticate with GitHub
+    required: true
+    type: string
+
+  build_artifacts:
+    description: Build artifacts and add to release
+    required: true
+    default: false
+    type: boolean
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get version
+      id: get-version
+      shell: bash
+      run: echo "##[set-output name=tag;]$(poetry version --short)"
+
+    - name: Create Release
+      uses: ncipollo/release-action@v1
+      if: ${{ inputs.build_artifacts == 'false' }}
+      with:
+        token: ${{ inputs.github_token }}
+        tag: ${{ steps.get-version.outputs.tag }}
+        name: ${{ steps.get-version.outputs.tag }}
+        generateReleaseNotes: true
+
+    - name: Build Project for Distribution
+      if: ${{ inputs.build_artifacts == 'true' }}
+      shell: bash
+      run: |
+        poetry build
+
+    - name: Create Release With Artifacts
+      uses: ncipollo/release-action@v1
+      if: ${{ inputs.build_artifacts == 'true' }}
+      with:
+        token: ${{ inputs.github_token }}
+        artifacts: "dist/*"
+        tag: ${{ steps.get-version.outputs.tag }}
+        name: ${{ steps.get-version.outputs.tag }}
+        generateReleaseNotes: true
+
+    - name: Update Latest Tag
+      uses: EndBug/latest-tag@v1
+      with:
+        ref: latest
+
+    - name: Extract Major Version
+      shell: bash
+      run: echo "##[set-output name=tag;]$(echo ${{ steps.get-version.outputs.tag }} | cut -d '.' -f1)"
+      id: extract_major_version
+
+    - name: Update Major Tag
+      uses: EndBug/latest-tag@v1
+      with:
+        ref: ${{ steps.extract_major_version.outputs.tag }}
