@@ -12,7 +12,7 @@ class Thumbnail(BaseModel):
     height: Optional[int] = Field(default=None, description="The height of the image.")
     width: Optional[int] = Field(default=None, description="The width of the image.")
     bg_color: Optional[str] = Field(default=None, description="The background color of the image.")
-    original: HttpUrl = Field(description="The original URL of the image.")
+    original: Optional[HttpUrl] = Field(default=None, description="The original URL of the image.")
     logo: Optional[bool] = Field(default=False, description="Whether the image is a logo.")
     duplicated: Optional[bool] = Field(default=None, description="Whether the image is duplicated.")
     theme: Optional[str] = Field(default=None, description="The theme associated with the thumbnail.")
