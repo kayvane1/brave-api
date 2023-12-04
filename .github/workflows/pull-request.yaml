@@ -36,7 +36,7 @@ jobs:
         if: github.ref_name == 'staging'
         uses: ./.util/actions/github/pull-request
         with:
-          github_token: "${{ secrets.GITHUB_TOKEN }}"
+          github_token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
           destination_branch: production
           pr_title: Production Release
           pr_template_file: simple_checklist.md
