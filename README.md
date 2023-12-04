@@ -46,7 +46,7 @@ brave = AsyncBrave()
 query = "cobalt mining"
 num_results = 10
 
-results = await brave.search(q=query, count=num_results)
+search_results = await brave.search(q=query, count=num_results)
 ```
 ## Features
 
@@ -120,8 +120,21 @@ goggle_url = "https://raw.githubusercontent.com/CSamuelAnderson/Brave-goggles/ma
 num_results = 10
 result_filter = "web" # must be comma separated string
 
-results = brave.search(q=query, goggles_id=goggle_url, count=num_results, result_filter=result_filter)
+search_results = brave.search(q=query, goggles_id=goggle_url, count=num_results, result_filter=result_filter)
 
+```
+
+You can also make use of Goggles that have been directly contributed to this package:
+
+```python
+
+from brave import Brave
+from brave.goggles import thought_leadership
+
+query = "cobalt mining"
+num_results = 10
+
+search_results = brave.search(q=query, goggles_id=thought_leadership, count=num_results)
 ```
 
 ## Installation

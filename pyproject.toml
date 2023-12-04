@@ -111,6 +111,7 @@ ignore = [   # Choose the flake8 errors to ignore globally here
   "ANN1",    # Missing type annotation for self in methot or cls method
   "W503",    # Line break occurred before a binary operator
   "E203",    # Whitespace before ':'
+  "F403",   # 'from module import *' used; unable to detect undefined names
 ]
 per-file-ignores = [     # Choose the flake8 errors to ignore per file here
   "*/__init__.py:F401",  # Ignore imported but unused in __init__.py files
