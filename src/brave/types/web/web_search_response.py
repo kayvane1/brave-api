@@ -57,19 +57,24 @@ class WebSearchApiResponse(BaseModel):
         return _results.get("web").get("results") if self.web and self.web.results else []
 
     @property
+    def _web_results(self) -> List[SearchResult]:
+        """Property to access the list of search results directly."""
+        return self.web.results if self.web and self.web.results else []
+
+    @property
     def urls(self) -> List[str]:
         """Return a list of URLs."""
-        return [result.url for result in self.web_results if result.url]
+        return [result.url for result in self._web_results if result.url]
 
     @property
     def review_urls(self) -> List[str]:
         """Return a list of review URLs."""
-        return [result.url for result in self.web_results if result.subtype == "product" and result.review]
+        return [result.url for result in self._web_results if result.subtype == "product" and result.review]
 
     @property
     def descriptions(self) -> List[str]:
         """Return a list of descriptions."""
-        return [result.description for result in self.web_results if result.description]
+        return [result.description for result in self._web_results if result.description]
 
     @property
     def news_results(self) -> List[str]:
@@ -86,11 +91,11 @@ class WebSearchApiResponse(BaseModel):
     @property
     def product_cluster(self) -> List[str]:
         """Return a list of product clusters."""
-        return [result.product_cluster for result in self.web_results if result.subtype == "product_cluster"][0]
+        return [result.product_cluster for result in self._web_results if result.subtype == "product_cluster"][0]
 
     def download_all_pdfs(self, path: str = "downloads") -> None:
         """Download PDFs for all search results."""
-        for result in self.results:
+        for result in self._web_results:
             if result.content_type == "pdf":
                 result.download_pdf(path=path)
 
@@ -98,7 +103,7 @@ class WebSearchApiResponse(BaseModel):
         """Return a list of product prices."""
         if len(self.product_cluster) == 0:
             return [
-                float(result.product.price) for result in self.web_results if result.product and result.product.price
+                float(result.product.price) for result in self._web_results if result.product and result.product.price
             ]
         else:
             return [float(result.price) for result in self.product_cluster]
@@ -113,7 +118,7 @@ class WebSearchApiResponse(BaseModel):
         if len(self.product_cluster) == 0:
             ratings = [
                 float(result.product.rating.ratingValue) / float(result.product.rating.bestRating)
-                for result in self.web_results
+                for result in self._web_results
                 if result.product and result.product.rating
             ]
         else:

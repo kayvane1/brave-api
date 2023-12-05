@@ -26,8 +26,8 @@ class VideoResult(Result):
         default="video_result", description="The type identifying the video result. The value is always video_result."
     )
     video: VideoData = Field(description="Metadata for the video.")
-    meta_url: MetaUrl = Field(description="Aggregated information on the URL.")
-    thumbnail: Thumbnail = Field(description="The thumbnail of the video.")
+    meta_url: Optional[MetaUrl] = Field(default=None, description="Aggregated information on the URL.")
+    thumbnail: Optional[Thumbnail] = Field(default=None, description="The thumbnail of the video.")
     age: Optional[str] = Field(default=None, description="A string representing the age of the video.")
 
 
