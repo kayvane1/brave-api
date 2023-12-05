@@ -16,7 +16,6 @@ generate-setup-file = false
 
 
 [tool.poetry.dependencies]
-python = "^3.11"
 requests = "^2.26.0"
 httpx = "^0.25.2"
 tenacity = "^8.2.3"
