@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "brave-search"
-version = "0.1.0"
+version = "0.1.1"
 description = "Brave Search API wrapper"
 authors = ["Kayvane Shakerifar"]
 readme = "README.md"
