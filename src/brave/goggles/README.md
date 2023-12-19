@@ -23,4 +23,4 @@ Want to learn more about the motivation for Goggles? Check out the [Goggles whit
 # This repo will host public goggles contributed by the community and be accessible as part of the package.
 
 - Thought Leadership
-- Acamdeic Research
+- Academic Research

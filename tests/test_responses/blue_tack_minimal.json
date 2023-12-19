@@ -1,0 +1,114 @@
+{
+    "query": {
+        "original": "Blue tack",
+        "show_strict_warning": false,
+        "is_navigational": false,
+        "is_news_breaking": false,
+        "local_decision": "drop",
+        "local_locations_idx": 0,
+        "spellcheck_off": true,
+        "country": "us",
+        "bad_results": false,
+        "should_fallback": false,
+        "postal_code": "",
+        "city": "",
+        "state": "",
+        "header_country": "",
+        "more_results_available": true
+    },
+    "mixed": {
+        "type": "mixed",
+        "main": [
+            {
+                "type": "web",
+                "index": 0,
+                "all": false
+            },
+            {
+                "type": "web",
+                "index": 1,
+                "all": false
+            }
+        ],
+        "top": [],
+        "side": []
+    },
+    "type": "search",
+    "web": {
+        "type": "search",
+        "results": [
+            {
+                "title": "Blu Tack - Wikipedia",
+                "url": "https://en.wikipedia.org/wiki/Blu_Tack",
+                "is_source_local": false,
+                "is_source_both": false,
+                "description": "Blu Tack is a <strong>reusable putty-like pressure-sensitive adhesive produced by Bostik</strong>, commonly used to attach lightweight objects (such as posters or sheets of paper) to walls, doors or other dry surfaces. Traditionally blue, it is also available in other colours.",
+                "page_age": "2023-11-23T09:26:19",
+                "language": "en",
+                "profile": {
+                    "name": "Wikipedia",
+                    "url": "https://en.wikipedia.org/wiki/Blu_Tack",
+                    "long_name": "en.wikipedia.org",
+                    "img": "https://imgs.search.brave.com/0kxnVOiqv-faZvOJc7zpym4Zin1CTs1f1svfNZSzmfU/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNjQwNGZhZWY0/ZTQ1YWUzYzQ3MDUw/MmMzMGY3NTQ0ZjNj/NDUwMDk5ZTI3MWRk/NWYyNTM4N2UwOTE0/NTI3ZDQzNy9lbi53/aWtpcGVkaWEub3Jn/Lw"
+                },
+                "family_friendly": true,
+                "type": "search_result",
+                "subtype": "generic",
+                "deep_results": {},
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "en.wikipedia.org",
+                    "hostname": "en.wikipedia.org",
+                    "favicon": "https://imgs.search.brave.com/0kxnVOiqv-faZvOJc7zpym4Zin1CTs1f1svfNZSzmfU/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvNjQwNGZhZWY0/ZTQ1YWUzYzQ3MDUw/MmMzMGY3NTQ0ZjNj/NDUwMDk5ZTI3MWRk/NWYyNTM4N2UwOTE0/NTI3ZDQzNy9lbi53/aWtpcGVkaWEub3Jn/Lw",
+                    "path": "› wiki  › Blu_Tack"
+                },
+                "age": "1 month ago"
+            }
+        ],
+        "family_friendly": true
+    },
+    "videos": {
+        "type": "videos",
+        "results": [
+            {
+                "title": "10 Amazing Uses for Blu Tack - YouTube",
+                "url": "https://www.youtube.com/watch?v=yLsGCdWmqfs",
+                "description": "Blu Tack has to be one of the World's most versatile products so here are 10 little-known uses for the malleable substance.",
+                "page_age": "2015-12-02T16:06:16",
+                "type": "video_result",
+                "video": {},
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https://imgs.search.brave.com/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTkyZTZiMWU3/YzU3Nzc5YjExYzUy/N2VhZTIxOWNlYjM5/ZGVjN2MyZDY4Nzdh/ZDYzMTYxNmI5N2Rk/Y2Q3N2FkNy93d3cu/eW91dHViZS5jb20v",
+                    "path": "› watch"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/iZOYyMN6JdLCMaQtGLzBZF0Rpq_HokKmVlPmZHT7UFY/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9pLnl0/aW1nLmNvbS92aS95/THNHQ2RXbXFmcy9o/cWRlZmF1bHQuanBn"
+                },
+                "age": "December 2, 2015"
+            },
+            {
+                "title": "Several usages of Blu Tack | How to use Blu Tack | Blu tack uses ...",
+                "url": "https://www.youtube.com/watch?v=nUoEC1ucl7o",
+                "description": "In this video I have shown some amazing usages of Blu Tack. Blu Tack is a reusable adhesive and is commonly used to stick light weight objects to the walls, ...",
+                "page_age": "2018-07-13T10:09:03",
+                "type": "video_result",
+                "video": {},
+                "meta_url": {
+                    "scheme": "https",
+                    "netloc": "youtube.com",
+                    "hostname": "www.youtube.com",
+                    "favicon": "https://imgs.search.brave.com/Ux4Hee4evZhvjuTKwtapBycOGjGDci2Gvn2pbSzvbC0/rs:fit:32:32:1/g:ce/aHR0cDovL2Zhdmlj/b25zLnNlYXJjaC5i/cmF2ZS5jb20vaWNv/bnMvOTkyZTZiMWU3/YzU3Nzc5YjExYzUy/N2VhZTIxOWNlYjM5/ZGVjN2MyZDY4Nzdh/ZDYzMTYxNmI5N2Rk/Y2Q3N2FkNy93d3cu/eW91dHViZS5jb20v",
+                    "path": "› watch"
+                },
+                "thumbnail": {
+                    "src": "https://imgs.search.brave.com/pK3CozSg3Nqqeh0NqSk0qwdVTN488h0RUg-RNZPKu84/rs:fit:200:200:1/g:ce/aHR0cHM6Ly9pLnl0/aW1nLmNvbS92aS9u/VW9FQzF1Y2w3by9t/YXhyZXNkZWZhdWx0/LmpwZw"
+                },
+                "age": "July 13, 2018"
+            }
+        ],
+        "mutated_by_goggles": false
+    }
+}
