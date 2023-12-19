@@ -32,6 +32,7 @@ optional = true
 pytest = "^7.1.1" # Allows for testing of the project
 pytest-cov = "^4.0.0" # Allows to run coverage of the project
 moto = "^3.1.6" # Allows for mocking of AWS services
+coverage = "^7.3.3" # Allows for coverage of the project
 
 [tool.poetry.group.lint]
 optional = true
@@ -146,9 +147,3 @@ addopts = """
 testpaths = [
     "tests",
 ]
-
-[tool.coverage.run]
-omit = ["*/tests/*"]    # Remove test files from coverage run.
-
-[tool.coverage.report]
-omit = ["*/tests/*"]    # Remove test files from coverage report.
