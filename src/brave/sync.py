@@ -22,7 +22,7 @@ class Brave(BraveAPIClient):
         super().__init__(api_key=api_key, endpoint=endpoint)
 
     @retry(stop=stop_after_attempt(3), wait=wait_fixed(2))
-    def _get(self, params: Dict = None) -> requests.Response:
+    def _get(self, params: Optional[Dict] = None) -> Optional[requests.Response]:
         """
         Perform a synchronous GET request to the specified endpoint with optional parameters.
 

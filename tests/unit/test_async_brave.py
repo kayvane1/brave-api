@@ -4,6 +4,7 @@ from unittest.mock import AsyncMock
 
 import httpx
 import pytest
+import tenacity
 
 from brave.async_brave import AsyncBrave
 from brave.types import WebSearchApiResponse
@@ -19,7 +20,11 @@ async def test_async_brave_initialization():
 @pytest.mark.asyncio
 async def test_async_get_success(monkeypatch):
     async def mock_get(*args, **kwargs):
-        return httpx.Response(200, json={"data": "test response"})
+        # Create a Mock Response
+        mock_response = httpx.Response(200, json={"data": "test response"})
+        # Setting the request attribute
+        mock_response._request = httpx.Request(method="GET", url=args[0])
+        return mock_response
 
     monkeypatch.setattr(httpx.AsyncClient, "get", AsyncMock(side_effect=mock_get))
 
@@ -37,7 +42,11 @@ async def test_async_get_with_retries(monkeypatch):
         call_count += 1
         if call_count < 3:
             raise httpx.HTTPError("Temporary failure")
-        return httpx.Response(200, json={"data": "test response after retries"})
+        # Create a Mock Response
+        mock_response = httpx.Response(200, json={"data": "test response after retries"})
+        # Setting the request attribute
+        mock_response._request = httpx.Request(method="GET", url=args[0])
+        return mock_response
 
     monkeypatch.setattr(httpx.AsyncClient, "get", AsyncMock(side_effect=mock_get))
 
@@ -49,10 +58,13 @@ async def test_async_get_with_retries(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_async_get_failure(monkeypatch):
+    # Mocking httpx.AsyncClient.get to always raise an HTTPError
     monkeypatch.setattr(httpx.AsyncClient, "get", AsyncMock(side_effect=httpx.HTTPError("Permanent failure")))
 
     client = AsyncBrave(api_key="test_key")
-    with pytest.raises(httpx.HTTPError):
+
+    # Expecting tenacity.RetryError instead of httpx.HTTPError
+    with pytest.raises(tenacity.RetryError):
         await client._get(params={"q": "test query"})
 
 
@@ -63,7 +75,9 @@ async def test_response_validation(monkeypatch):
         _mock_response = json.load(f)
 
     async def mock_get(*args, **kwargs):
-        return httpx.Response(200, json=_mock_response)
+        mock_response = httpx.Response(200, json=_mock_response)
+        mock_response._request = httpx.Request(method="GET", url=args[0])
+        return mock_response
 
     monkeypatch.setattr(httpx.AsyncClient, "get", AsyncMock(side_effect=mock_get))
 
