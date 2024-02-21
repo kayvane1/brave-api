@@ -22,6 +22,7 @@ from .article import Article
 from .book import Book
 from .faq import FAQ
 from .faq import QA
+from .faq import QAPage
 from .location_result import LocationResult
 from .location_result import Locations
 from .product import Product
@@ -66,7 +67,7 @@ class SearchResult(Result):
     faq: Optional[FAQ] = Field(
         default=None, description="Any frequently asked questions associated with the web search result."
     )
-    qa: Optional[QA] = Field(
+    qa: Optional[QAPage] = Field(
         default=None, description="Any question answer information associated with the web search result page."
     )
     book: Optional[Book] = Field(
