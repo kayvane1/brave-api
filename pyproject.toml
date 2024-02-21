@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "brave-search"
-version = "0.1.3"
+name = "brave-api"
+version = "0.1.4"
 description = "Brave Search API wrapper"
 authors = ["Kayvane Shakerifar"]
 readme = "README.md"
-homepage = "https://github.com/kayvane1/brave-search"
-repository = "https://github.com/kayvane1/brave-search"
+homepage = "https://github.com/kayvane1/brave-api"
+repository = "https://github.com/kayvane1/brave-api"
 keywords = ['search', 'brave', 'api']  # noqa
 packages = [
     { include = "brave", from = "src" },
