@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "brave-api"
+name = "brave-search"
 version = "0.1.4"
 description = "Brave Search API wrapper"
 authors = ["Kayvane Shakerifar"]
