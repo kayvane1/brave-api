@@ -143,6 +143,18 @@ num_results = 10
 search_results = brave.search(q=query, goggles_id=thought_leadership, count=num_results)
 ```
 
+To return the raw JSON response that has not been validated through the pydantic model use the `raw` flag:
+
+```python
+
+from brave import Brave
+
+query = "George Orwell, 1984"
+num_results = 10
+
+search_results = brave.search(q=query, raw=True)
+```
+
 ## Local Installation
 
 This package uses Poetry for dependency management. To start developing here, you need to install Poetry

@@ -28,9 +28,9 @@ class WebSearchApiResponse(BaseModel):
     """Brave Search API response object"""
 
     query: Query = Field(description="Search query string and its modifications that are used for search.")
-    mixed: MixedResponse = Field(description="Preferred ranked order of search results.")
+    mixed: Optional[MixedResponse] = Field(default=None, description="Preferred ranked order of search results.")
     type: str = Field(default="search", description="The type of web search API result. The value is always search.")
-    web: Search = Field(description="Web search results relevant to the query.")
+    web: Optional[Search] = Field(default=None, description="Web search results relevant to the query.")
     discussions: Optional[Discussions] = Field(
         default=None, description="Discussions clusters aggregated from forum posts that are relevant to the query."
     )

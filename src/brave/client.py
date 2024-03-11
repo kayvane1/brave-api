@@ -61,6 +61,7 @@ class BraveAPIClient:
         goggles_id: Optional[str] = None,
         units: Optional[str] = None,
         extra_snippets: Optional[bool] = False,
+        raw: Optional[bool] = False,
     ) -> WebSearchApiResponse:
         """
         Perform a search using the Brave Search API.
@@ -129,7 +130,8 @@ class BraveAPIClient:
             # Handle errors (e.g., log them, raise exceptions)
             raise BraveError(f"API Error: {response.status_code} - {response.text}")
 
-        # return response.json()
+        if raw:
+            return response.json()
         return WebSearchApiResponse.model_validate(response.json())
 
     def image(

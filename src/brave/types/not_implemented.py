@@ -43,12 +43,6 @@ class GraphInfobox(BaseModel):  # Replace with actual model definition
     pass
 
 
-class MixedResponse(BaseModel):  # Replace with actual model definition
-    """MixedResponse model"""
-
-    pass
-
-
 class News(BaseModel):  # Replace with actual model definition
     """News model"""
 

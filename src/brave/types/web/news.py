@@ -6,9 +6,10 @@ from pydantic import Field
 
 from ..shared.meta_url import MetaUrl
 from ..shared.thumbnail import Thumbnail
+from .result import Result
 
 
-class NewsResult(BaseModel):
+class NewsResult(Result):
     """A model representing news results."""
 
     meta_url: Optional[MetaUrl] = Field(
@@ -18,6 +19,10 @@ class NewsResult(BaseModel):
     breaking: Optional[bool] = Field(default=None, description="Whether the news result is currently a breaking news.")
     thumbnail: Optional[Thumbnail] = Field(default=None, description="The thumbnail associated with the news result.")
     age: Optional[str] = Field(default=None, description="A string representing the age of the news article.")
+    url: Optional[str] = Field(default=None, description="Url of the news result")
+    extra_snippets: Optional[List[str]] = Field(
+        default=None, description="A list of extra alternate snippets for the news search result."
+    )
 
 
 class News(BaseModel):
