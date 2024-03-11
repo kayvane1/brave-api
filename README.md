@@ -148,9 +148,8 @@ To return the raw JSON response that has not been validated through the pydantic
 ```python
 
 from brave import Brave
-from brave.goggles import thought_leadership
 
-query = "cobalt mining"
+query = "George Orwell, 1984"
 num_results = 10
 
 search_results = brave.search(q=query, raw=True)
