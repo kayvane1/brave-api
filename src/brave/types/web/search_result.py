@@ -3,6 +3,7 @@ import os
 
 from typing import List
 from typing import Optional
+from typing import Union
 
 import requests
 
@@ -78,7 +79,7 @@ class SearchResult(Result):
     product: Optional[Product] = Field(
         default=None, description="The main product and a review that is found on the web search result page."
     )
-    product_cluster: Optional[List[Product | Review]] = Field(
+    product_cluster: Optional[List[Union[Product, Review]]] = Field(
         default=None, description="A list of products and reviews that are found on the web search result page."
     )
     cluster_type: Optional[str] = Field(
