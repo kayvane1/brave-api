@@ -89,9 +89,13 @@ class WebSearchApiResponse(BaseModel):
         return _results.get("videos").get("results") if self.videos else []
 
     @property
-    def product_cluster(self) -> List[str]:
+    def product_cluster(self) -> List:
         """Return a list of product clusters."""
-        return [result.product_cluster for result in self._web_results if result.subtype == "product_cluster"][0]
+        clusters = []
+        for result in self._web_results:
+            if result.subtype == "product_cluster" and result.product_cluster:
+                clusters.extend(result.product_cluster)
+        return clusters
 
     def download_all_pdfs(self, path: str = "downloads") -> None:
         """Download PDFs for all search results."""
@@ -101,7 +105,7 @@ class WebSearchApiResponse(BaseModel):
 
     def product_prices(self) -> List[int]:
         """Return a list of product prices."""
-        if len(self.product_cluster) == 0:
+        if not self.product_cluster:
             return [
                 float(result.product.price) for result in self._web_results if result.product and result.product.price
             ]
@@ -111,11 +115,13 @@ class WebSearchApiResponse(BaseModel):
     def product_price_ranges(self) -> Tuple[int, int]:
         """Return a list of product price ranges."""
         prices = self.product_prices()
+        if not prices:
+            return (0, 0)
         return (min(prices), max(prices))
 
     def average_product_review_score(self) -> Optional[float]:
         """Return the average product review score out of 100."""
-        if len(self.product_cluster) == 0:
+        if not self.product_cluster:
             ratings = [
                 float(result.product.rating.ratingValue) / float(result.product.rating.bestRating)
                 for result in self._web_results
